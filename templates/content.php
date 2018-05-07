@@ -121,6 +121,7 @@ $monitor_id       = get_post_meta( $post->ID, '_orbis_website_monitor_id', true 
 			'--max-time 7', // https://curl.haxx.se/docs/manpage.html#-m
 			'--write-out "%{http_code}\t%{url_effective}\\n"', // https://curl.haxx.se/docs/manpage.html#-w
 			'--user-agent "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/601.5.17 (KHTML, like Gecko) Version/9.1 Safari/601.5.17"', // https://curl.haxx.se/docs/manpage.html#-A
+			'--output /dev/null',
 			$url
 		) ) );
 
@@ -224,7 +225,7 @@ $monitor_id       = get_post_meta( $post->ID, '_orbis_website_monitor_id', true 
 					 * -d          create directories the same as file  names  and  get  the  files  into  them
                         instead of current directory.
                      */
-					'mget -c public_html/.htaccess',
+					'get public_html/.htaccess',
 				) ) ),
 			) );
 
