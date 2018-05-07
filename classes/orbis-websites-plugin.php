@@ -57,13 +57,16 @@ class Orbis_Websites_Plugin extends Orbis_Plugin {
 
 		/* OK, its safe for us to save the data now. */
 		$definition = array(
-			'_orbis_website_url'           => FILTER_VALIDATE_URL,
-			'_orbis_website_host'          => FILTER_SANITIZE_STRING,
-			'_orbis_website_root_path'     => FILTER_SANITIZE_STRING,
-			'_orbis_website_public_path'   => FILTER_SANITIZE_STRING,
-			'_orbis_website_has_wp_cli'    => FILTER_VALIDATE_BOOLEAN,
-			'_orbis_website_git_url'       => FILTER_SANITIZE_STRING,
-			'_orbis_website_infinitewp_id' => FILTER_SANITIZE_STRING,
+			'_orbis_website_url'              => FILTER_VALIDATE_URL,
+			'_orbis_website_host'             => FILTER_SANITIZE_STRING,
+			'_orbis_website_host_keychain_id' => FILTER_SANITIZE_STRING,
+			'_orbis_website_root_path'        => FILTER_SANITIZE_STRING,
+			'_orbis_website_public_path'      => FILTER_SANITIZE_STRING,
+			'_orbis_website_has_wp_cli'       => FILTER_VALIDATE_BOOLEAN,
+			'_orbis_website_git_url'          => FILTER_SANITIZE_STRING,
+			'_orbis_website_infinitewp_id'    => FILTER_SANITIZE_STRING,
+			'_orbis_website_wp_keychain_id'   => FILTER_SANITIZE_STRING,
+			'_orbis_website_monitor_id'       => FILTER_SANITIZE_STRING,
 		);
 
 		$data = filter_input_array( INPUT_POST, $definition );

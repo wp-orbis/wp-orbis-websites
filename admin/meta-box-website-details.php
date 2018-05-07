@@ -10,6 +10,24 @@ $public_path      = get_post_meta( $post->ID, '_orbis_website_public_path', true
 $has_wp_cli       = get_post_meta( $post->ID, '_orbis_website_has_wp_cli', true );
 $git_url          = get_post_meta( $post->ID, '_orbis_website_git_url', true );
 $iwp_site_id      = get_post_meta( $post->ID, '_orbis_website_infinitewp_id', true );
+$wp_keychain_id   = get_post_meta( $post->ID, '_orbis_website_wp_keychain_id', true );
+$monitor_id       = get_post_meta( $post->ID, '_orbis_website_monitor_id', true );
+
+$host_keychain = null;
+$wp_keychain   = null;
+$monitor       = null;
+
+if ( ! empty( $host_keychain_id ) ) {
+	$host_keychain = get_post( $host_keychain_id );
+}
+
+if ( ! empty( $wp_keychain_id ) ) {
+	$wp_keychain = get_post( $wp_keychain_id );
+}
+
+if ( ! empty( $monitor_id ) ) {
+	$monitor = get_post( $monitor_id );
+}
 
 ?>
 <table class="form-table">
@@ -31,11 +49,21 @@ $iwp_site_id      = get_post_meta( $post->ID, '_orbis_website_infinitewp_id', tr
 	</tr>
 	<tr valign="top">
 		<th scope="row">
-			<label for="orbis_website_host_keychain_id"><?php esc_html_e( 'Host Keychain ID', 'orbis-websites' ); ?></label>
+			<label for="orbis_website_host_keychain_id"><?php esc_html_e( 'Host Keychain', 'orbis-websites' ); ?></label>
 		</th>
 		<td>
 			<select id="orbis_website_host_keychain_id" name="_orbis_website_host_keychain_id" data-post-suggest="orbis/keychains">
+				<?php
 
+				if ( $host_keychain ) {
+					printf(
+						'<option value="%s" selected="selected">%s</option>',
+						esc_attr( $host_keychain->ID ),
+						esc_html( get_the_title( $host_keychain ) )
+					);
+				}
+
+				?>
 			</select>
 		</td>
 	</tr>
@@ -84,34 +112,44 @@ $iwp_site_id      = get_post_meta( $post->ID, '_orbis_website_infinitewp_id', tr
 			<input id="orbis_website_infinitewp_id" name="_orbis_website_infinitewp_id" value="<?php echo esc_attr( $iwp_site_id ); ?>" type="text" class="regular-text" />
 		</td>
 	</tr>
-</table>
+	<tr valign="top">
+		<th scope="row">
+			<label for="orbis_website_wp_keychain_id"><?php esc_html_e( 'WordPress Keychain', 'orbis-websites' ); ?></label>
+		</th>
+		<td>
+			<select id="orbis_website_wp_keychain_id" name="_orbis_website_wp_keychain_id" data-post-suggest="orbis/keychains">
+				<?php
 
-<script type="text/javascript">
-	jQuery( document ).ready( function( $ ) {
-		+	var subscriptionURL = window.location.origin + "/wp-json/wp/v2/orbis/subscriptions/select2";
-	
-		$( '.orbis-subscription-rest' ).select2( {
-			minimumInputLength: 2,
-			allowClear: true,
-			ajax: {
-				url: subscriptionURL,
-				dataType: 'json',
-				data: function( params ) {
-					return {
-						search: params.term
-					}
-				},
-				processResults: function( data ) {
-					return { results: data };
-				},
-				width: '100%',
-				selectOnClose: true,
-				formatNoMatches: formatNoMatches,
-				formatInputTooShort: formatInputTooShort,
-				formatSelectionTooBig: formatSelectionTooBig,
-				formatLoadMore: formatLoadMore,
-				formatSearching: formatSearching
-			},
-		} );
-	} );
-</script>
+				if ( $wp_keychain ) {
+					printf(
+						'<option value="%s" selected="selected">%s</option>',
+						esc_attr( $wp_keychain->ID ),
+						esc_html( get_the_title( $wp_keychain ) )
+					);
+				}
+
+				?>
+			</select>
+		</td>
+	</tr>
+	<tr valign="top">
+		<th scope="row">
+			<label for="orbis_website_monitor_id"><?php esc_html_e( 'Monitor', 'orbis-websites' ); ?></label>
+		</th>
+		<td>
+			<select id="orbis_website_monitor_id" name="_orbis_website_monitor_id" data-post-suggest="orbis/monitors">
+				<?php
+
+				if ( $monitor ) {
+					printf(
+						'<option value="%s" selected="selected">%s</option>',
+						esc_attr( $monitor->ID ),
+						esc_html( get_the_title( $monitor ) )
+					);
+				}
+
+				?>
+			</select>
+		</td>
+	</tr>
+</table>
