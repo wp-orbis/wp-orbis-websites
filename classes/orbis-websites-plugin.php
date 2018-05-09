@@ -59,7 +59,8 @@ class Orbis_Websites_Plugin extends Orbis_Plugin {
 		$definition = array(
 			'_orbis_website_url'              => FILTER_VALIDATE_URL,
 			'_orbis_website_host'             => FILTER_SANITIZE_STRING,
-			'_orbis_website_host_keychain_id' => FILTER_SANITIZE_STRING,
+			'_orbis_website_ftp_keychain_id'  => FILTER_SANITIZE_STRING,
+			'_orbis_website_ssh_keychain_id'  => FILTER_SANITIZE_STRING,
 			'_orbis_website_root_path'        => FILTER_SANITIZE_STRING,
 			'_orbis_website_public_path'      => FILTER_SANITIZE_STRING,
 			'_orbis_website_has_wp_cli'       => FILTER_VALIDATE_BOOLEAN,

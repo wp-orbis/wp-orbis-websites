@@ -6,7 +6,8 @@ $post = get_post();
 
 $url              = get_post_meta( $post->ID, '_orbis_website_url', true );
 $host             = get_post_meta( $post->ID, '_orbis_website_host', true );
-$host_keychain_id = get_post_meta( $post->ID, '_orbis_website_host_keychain_id', true );
+$ftp_keychain_id  = get_post_meta( $post->ID, '_orbis_website_ftp_keychain_id', true );
+$ssh_keychain_id  = get_post_meta( $post->ID, '_orbis_website_ssh_keychain_id', true );
 $root_path        = get_post_meta( $post->ID, '_orbis_website_root_path', true );
 $public_path      = get_post_meta( $post->ID, '_orbis_website_public_path', true );
 $has_wp_cli       = get_post_meta( $post->ID, '_orbis_website_has_wp_cli', true );
@@ -35,17 +36,34 @@ $monitor_id       = get_post_meta( $post->ID, '_orbis_website_monitor_id', true 
 		<code><?php echo esc_html( $host ); ?></code>
 	</dd>
 
-	<dt><?php esc_html_e( 'Host Keychain', 'orbis-websites' ); ?></dt>
+	<dt><?php esc_html_e( 'FTP Keychain', 'orbis-websites' ); ?></dt>
 	<dd>
 		<?php
 
-		if ( empty( $host_keychain_id ) ) {
+		if ( empty( $ftp_keychain_id ) ) {
 			echo '';
 		} else {
 			printf(
 				'<a href="%s">%s</a>',
-				esc_url( get_permalink( $host_keychain_id ) ),
-				esc_html( get_the_title( $host_keychain_id ) )
+				esc_url( get_permalink( $ftp_keychain_id ) ),
+				esc_html( get_the_title( $ftp_keychain_id ) )
+			);
+		}
+
+		?>
+	</dd>
+
+	<dt><?php esc_html_e( 'SSH Keychain', 'orbis-websites' ); ?></dt>
+	<dd>
+		<?php
+
+		if ( empty( $ssh_keychain_id ) ) {
+			echo '';
+		} else {
+			printf(
+				'<a href="%s">%s</a>',
+				esc_url( get_permalink( $ssh_keychain_id ) ),
+				esc_html( get_the_title( $ssh_keychain_id ) )
 			);
 		}
 
@@ -206,9 +224,9 @@ $monitor_id       = get_post_meta( $post->ID, '_orbis_website_monitor_id', true 
 		<dd>
 			<code><?php
 
-			$url      = get_post_meta( $host_keychain_id, '_orbis_keychain_url', true );
-			$username = get_post_meta( $host_keychain_id, '_orbis_keychain_username', true );
-			$password = get_post_meta( $host_keychain_id, '_orbis_keychain_password', true );
+			$url      = get_post_meta( $ftp_keychain_id, '_orbis_keychain_url', true );
+			$username = get_post_meta( $ftp_keychain_id, '_orbis_keychain_username', true );
+			$password = get_post_meta( $ftp_keychain_id, '_orbis_keychain_password', true );
 
 			$uri = Uri::createFromString( $url );
 			$uri = $uri->withUserInfo( $username, $password );

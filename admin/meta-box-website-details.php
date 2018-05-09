@@ -4,7 +4,8 @@ wp_nonce_field( 'orbis_save_website_details', 'orbis_website_details_meta_box_no
 
 $url              = get_post_meta( $post->ID, '_orbis_website_url', true );
 $host             = get_post_meta( $post->ID, '_orbis_website_host', true );
-$host_keychain_id = get_post_meta( $post->ID, '_orbis_website_host_keychain_id', true );
+$ftp_keychain_id  = get_post_meta( $post->ID, '_orbis_website_ftp_keychain_id', true );
+$ssh_keychain_id  = get_post_meta( $post->ID, '_orbis_website_ssh_keychain_id', true );
 $root_path        = get_post_meta( $post->ID, '_orbis_website_root_path', true );
 $public_path      = get_post_meta( $post->ID, '_orbis_website_public_path', true );
 $has_wp_cli       = get_post_meta( $post->ID, '_orbis_website_has_wp_cli', true );
@@ -13,12 +14,17 @@ $iwp_site_id      = get_post_meta( $post->ID, '_orbis_website_infinitewp_id', tr
 $wp_keychain_id   = get_post_meta( $post->ID, '_orbis_website_wp_keychain_id', true );
 $monitor_id       = get_post_meta( $post->ID, '_orbis_website_monitor_id', true );
 
-$host_keychain = null;
+$ftp_keychain  = null;
+$ssh_keychain  = null;
 $wp_keychain   = null;
 $monitor       = null;
 
-if ( ! empty( $host_keychain_id ) ) {
-	$host_keychain = get_post( $host_keychain_id );
+if ( ! empty( $ftp_keychain_id ) ) {
+	$ftp_keychain = get_post( $ftp_keychain_id );
+}
+
+if ( ! empty( $ssh_keychain_id ) ) {
+	$ssh_keychain = get_post( $ssh_keychain_id );
 }
 
 if ( ! empty( $wp_keychain_id ) ) {
@@ -49,17 +55,37 @@ if ( ! empty( $monitor_id ) ) {
 	</tr>
 	<tr valign="top">
 		<th scope="row">
-			<label for="orbis_website_host_keychain_id"><?php esc_html_e( 'Host Keychain', 'orbis-websites' ); ?></label>
+			<label for="orbis_website_ftp_keychain_id"><?php esc_html_e( 'FTP Keychain', 'orbis-websites' ); ?></label>
 		</th>
 		<td>
-			<select id="orbis_website_host_keychain_id" name="_orbis_website_host_keychain_id" data-post-suggest="orbis/keychains">
+			<select id="orbis_website_ftp_keychain_id" name="_orbis_website_ftp_keychain_id" data-post-suggest="orbis/keychains">
 				<?php
 
-				if ( $host_keychain ) {
+				if ( $ftp_keychain ) {
 					printf(
 						'<option value="%s" selected="selected">%s</option>',
-						esc_attr( $host_keychain->ID ),
-						esc_html( get_the_title( $host_keychain ) )
+						esc_attr( $ftp_keychain->ID ),
+						esc_html( get_the_title( $ftp_keychain ) )
+					);
+				}
+
+				?>
+			</select>
+		</td>
+	</tr>
+	<tr valign="top">
+		<th scope="row">
+			<label for="orbis_website_ssh_keychain_id"><?php esc_html_e( 'SSH Keychain', 'orbis-websites' ); ?></label>
+		</th>
+		<td>
+			<select id="orbis_website_ssh_keychain_id" name="_orbis_website_ssh_keychain_id" data-post-suggest="orbis/keychains">
+				<?php
+
+				if ( $ssh_keychain ) {
+					printf(
+						'<option value="%s" selected="selected">%s</option>',
+						esc_attr( $ssh_keychain->ID ),
+						esc_html( get_the_title( $ssh_keychain ) )
 					);
 				}
 
