@@ -3,6 +3,7 @@
 wp_nonce_field( 'orbis_save_website_details', 'orbis_website_details_meta_box_nonce' );
 
 $url              = get_post_meta( $post->ID, '_orbis_website_url', true );
+$ipv4_address     = get_post_meta( $post->ID, '_orbis_website_ipv4_address', true );
 $host             = get_post_meta( $post->ID, '_orbis_website_host', true );
 $ftp_keychain_id  = get_post_meta( $post->ID, '_orbis_website_ftp_keychain_id', true );
 $ssh_keychain_id  = get_post_meta( $post->ID, '_orbis_website_ssh_keychain_id', true );
@@ -43,6 +44,14 @@ if ( ! empty( $monitor_id ) ) {
 		</th>
 		<td>
 			<input id="orbis_website_url" name="_orbis_website_url" value="<?php echo esc_attr( $url ); ?>" type="url" class="regular-text" />
+		</td>
+	</tr>
+	<tr valign="top">
+		<th scope="row">
+			<label for="orbis_website_ipv4_address"><?php esc_html_e( 'IPv4 address', 'orbis-websites' ); ?></label>
+		</th>
+		<td>
+			<input id="orbis_website_ipv4_address" name="_orbis_website_ipv4_address" value="<?php echo esc_attr( $ipv4_address ); ?>" type="text" class="regular-text" />
 		</td>
 	</tr>
 	<tr valign="top">

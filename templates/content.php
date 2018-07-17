@@ -5,6 +5,7 @@ use League\Uri\Uri;
 $post = get_post();
 
 $url              = get_post_meta( $post->ID, '_orbis_website_url', true );
+$ipv4_address     = get_post_meta( $post->ID, '_orbis_website_ipv4_address', true );
 $host             = get_post_meta( $post->ID, '_orbis_website_host', true );
 $ftp_keychain_id  = get_post_meta( $post->ID, '_orbis_website_ftp_keychain_id', true );
 $ssh_keychain_id  = get_post_meta( $post->ID, '_orbis_website_ssh_keychain_id', true );
@@ -29,6 +30,11 @@ $monitor_id       = get_post_meta( $post->ID, '_orbis_website_monitor_id', true 
 		);
 
 		?>
+	</dd>
+
+	<dt><?php esc_html_e( 'IPv4 address', 'orbis-websites' ); ?></dt>
+	<dd>
+		<code><?php echo esc_html( $ipv4_address ); ?></code>
 	</dd>
 
 	<dt><?php esc_html_e( 'Host', 'orbis-websites' ); ?></dt>

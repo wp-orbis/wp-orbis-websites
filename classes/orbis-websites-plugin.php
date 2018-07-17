@@ -10,14 +10,48 @@ class Orbis_Websites_Plugin extends Orbis_Plugin {
 		// general hooks
 		add_action( 'init', array( $this, 'init' ) );
 
+		add_filter( 'query_vars', array( $this, 'query_vars' ) );
+
+		add_action( 'template_include', array( $this, 'template_include' ) );
+
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
 
 		add_action( 'save_post_orbis_website', array( $this, 'save_post' ) );
 
 		add_filter( 'the_content', array( $this, 'extend_website_content' ) );
+
+		add_action( 'pre_get_posts', array( $this,  'pre_get_posts' ) );
 	}
 
-	//////////////////////////////////////////////////
+	public function pre_get_posts( $query ) {
+		if ( is_admin() ) {
+			return;
+		}
+
+		if ( $query->is_main_query() && $query->is_post_type_archive( 'orbis_website' ) && $query->get( 'orbis_website_command' ) ) {
+			$query->set( 'posts_per_page', -1 );
+		}
+	}
+
+	public function query_vars( $query_vars ) {
+		$query_vars[] = 'orbis_website_command';
+
+		return $query_vars;
+	}
+
+	/**
+	 *
+	 * @hooked template_include - 10 - https://github.com/WordPress/WordPress/blob/4.9.7/wp-includes/template-loader.php#L66-L73
+	 */
+	public function template_include( $template ) {
+		$cmd = get_query_var( 'orbis_website_command' );
+
+		if ( empty( $cmd ) ) {
+			return $template;
+		}
+
+		return plugin_dir_path( $this->file ) . 'templates/websites-command.php';
+	}
 
 	/**
 	 * Add meta boxes
@@ -58,6 +92,7 @@ class Orbis_Websites_Plugin extends Orbis_Plugin {
 		/* OK, its safe for us to save the data now. */
 		$definition = array(
 			'_orbis_website_url'              => FILTER_VALIDATE_URL,
+			'_orbis_website_ipv4_address'     => FILTER_SANITIZE_STRING,
 			'_orbis_website_host'             => FILTER_SANITIZE_STRING,
 			'_orbis_website_ftp_keychain_id'  => FILTER_SANITIZE_STRING,
 			'_orbis_website_ssh_keychain_id'  => FILTER_SANITIZE_STRING,
