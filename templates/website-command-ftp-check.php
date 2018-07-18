@@ -28,6 +28,7 @@ $command = implode( ' ', array(
 	'-c',
 	escapeshellarg( implode( '; ', array(
 		'set ssl:verify-certificate no',
+		'set sftp:auto-confirm yes', // https://github.com/lavv17/lftp/issues/132
 		'set ftp:list-options -a',
 		'open --user ' . $username . ' --password ' . $password . ' ' . $url,
 		'cd .'

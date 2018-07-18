@@ -31,6 +31,8 @@ SELECT
 	subscription_product.price,
 	subscription.name,
 	subscription.activation_date,
+	subscription.cancel_date,
+	subscription.expiration_date,
 	website_post.ID,
 	website_post.post_title
 FROM
